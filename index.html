@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>提案書レビュー｜株式会社クオーレ向け中間管理職マネジメント研修</title>
+<style>
+  :root {
+    --primary: #1a2a4a;
+    --accent: #e74c3c;
+    --accent-light: #fdecea;
+    --warn: #f39c12;
+    --warn-light: #fef9e7;
+    --good: #27ae60;
+    --good-light: #eafaf1;
+    --info: #3498db;
+    --info-light: #eaf2f8;
+    --bg: #f7f8fa;
+    --card: #fff;
+    --border: #e2e5ea;
+    --text: #2c3e50;
+    --text-light: #7f8c8d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .hero {
+    background: linear-gradient(135deg, var(--primary) 0%, #2c3e6a 100%);
+    color: #fff;
+    padding: 60px 24px 48px;
+    text-align: center;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 20px;
+    padding: 4px 16px;
+    margin-bottom: 20px;
+    color: rgba(255,255,255,.8);
+  }
+  .hero h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.4;
+  }
+  .hero p { font-size: 14px; color: rgba(255,255,255,.7); }
+
+  /* ===== SUMMARY BAR ===== */
+  .summary-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 16px;
+    max-width: 900px;
+    margin: -32px auto 0;
+    padding: 0 24px;
+    position: relative;
+    z-index: 2;
+  }
+  .stat-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+  }
+  .stat-card .num {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+  .stat-card .num.red { color: var(--accent); }
+  .stat-card .num.orange { color: var(--warn); }
+  .stat-card .num.blue { color: var(--info); }
+  .stat-card .num.green { color: var(--good); }
+  .stat-card .label {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px;
+  }
+
+  /* ===== SECTION ===== */
+  .section { margin-bottom: 48px; }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .section-icon.red { background: var(--accent-light); }
+  .section-icon.orange { background: var(--warn-light); }
+  .section-icon.blue { background: var(--info-light); }
+  .section-icon.green { background: var(--good-light); }
+  .section-title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  /* ===== ISSUE CARD ===== */
+  .issue-card {
+    background: var(--card);
+    border-radius: 12px;
+    border-left: 4px solid;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+  }
+  .issue-card.critical { border-left-color: var(--accent); }
+  .issue-card.warning { border-left-color: var(--warn); }
+  .issue-card.info { border-left-color: var(--info); }
+  .issue-card.good { border-left-color: var(--good); }
+
+  .issue-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: .5px;
+  }
+  .badge.slide {
+    background: #eee;
+    color: #555;
+  }
+  .badge.critical {
+    background: var(--accent-light);
+    color: var(--accent);
+  }
+  .badge.warning {
+    background: var(--warn-light);
+    color: #d68910;
+  }
+  .badge.info {
+    background: var(--info-light);
+    color: var(--info);
+  }
+  .issue-title {
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+    min-width: 200px;
+  }
+
+  .issue-body { font-size: 14px; color: #555; margin-bottom: 16px; }
+  .issue-body strong { color: var(--text); }
+
+  /* before / after */
+  .comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 12px;
+  }
+  @media (max-width: 640px) {
+    .comparison { grid-template-columns: 1fr; }
+  }
+  .comp-box {
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .comp-box.before {
+    background: #fdf2f2;
+    border: 1px solid #f5c6cb;
+  }
+  .comp-box.after {
+    background: #eafaf1;
+    border: 1px solid #a9dfbf;
+  }
+  .comp-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+  .comp-box.before .comp-label { color: var(--accent); }
+  .comp-box.after .comp-label { color: var(--good); }
+
+  /* ===== TABLE ===== */
+  .calc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    margin-top: 16px;
+  }
+  .calc-table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .calc-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .calc-table tr:last-child td { border-bottom: none; }
+  .calc-table .ok { color: var(--good); font-weight: 700; }
+
+  /* ===== CHECKLIST ===== */
+  .checklist { list-style: none; }
+  .checklist li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .checklist .check {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .checklist .check.pass { background: var(--good-light); color: var(--good); }
+  .checklist .check.fail { background: var(--accent-light); color: var(--accent); }
+
+  /* ===== PRIORITY ===== */
+  .priority-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+  }
+  .priority-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .priority-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 4px;
+  }
+  .priority-card.p1::before { background: var(--accent); }
+  .priority-card.p2::before { background: var(--warn); }
+  .priority-card.p3::before { background: var(--info); }
+  .priority-rank {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .priority-card.p1 .priority-rank { color: var(--accent); }
+  .priority-card.p2 .priority-rank { color: var(--warn); }
+  .priority-card.p3 .priority-rank { color: var(--info); }
+  .priority-card h4 {
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  .priority-card p {
+    font-size: 13px;
+    color: #666;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 12px;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== HERO ==================== -->
+<div class="hero">
+  <div class="hero-label">Proposal Review Report</div>
+  <h1>株式会社クオーレ向け<br>中間管理職マネジメント研修 提案書レビュー</h1>
+  <p>全19スライドの内容精査結果｜2026年4月3日作成</p>
+</div>
+
+<!-- ==================== SUMMARY ==================== -->
+<div class="summary-bar">
+  <div class="stat-card">
+    <div class="num red">4</div>
+    <div class="label">誤字・誤記</div>
+  </div>
+  <div class="stat-card">
+    <div class="num orange">2</div>
+    <div class="label">整合性の問題</div>
+  </div>
+  <div class="stat-card">
+    <div class="num blue">6</div>
+    <div class="label">内容面の改善点</div>
+  </div>
+  <div class="stat-card">
+    <div class="num green">2</div>
+    <div class="label">検算OK</div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ==================== 1. 誤字・誤記 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon red">!</div>
+    <div class="section-title">誤字・誤記（即修正）</div>
+  </div>
+
+  <!-- 1-1 -->
+  <div class="issue-card critical">
+    <div class="issue-header">
+      <span class="badge slide">Slide 8</span>
+      <span class="badge critical">致命的</span>
+      <span class="issue-title">タイトル「午前の部」→ 正しくは「午後の部」</span>
+    </div>
+    <div class="issue-body">
+      13:00〜17:00の午後パートなのに、Slide 7と同じ「午前の部」がそのままコピーされています。<strong>顧客が最も目を通すタイムテーブル部分のため、信頼性に直結します。</strong>
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        研修の流れ（1日集中プラン <strong>午前の部</strong>）
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">修正案</div>
+        研修の流れ（1日集中プラン <strong>午後の部</strong>）
+      </div>
+    </div>
+  </div>
+
+  <!-- 1-2 -->
+  <div class="issue-card critical">
+    <div class="issue-header">
+      <span class="badge slide">Slide 10</span>
+      <span class="badge critical">致命的</span>
+      <span class="issue-title">「SMRAT」→ 正しくは「SMART」</span>
+    </div>
+    <div class="issue-body">
+      SMARTの法則を解説するスライドで、肝心のフレームワーク名の綴りが間違っています（RとAが入れ替わっている）。<strong>研修の専門性に対する信頼を大きく損ないます。</strong>
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        適切な目標設定を促すためのフレームワーク「<strong>SMRAT</strong>の法則」
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">修正案</div>
+        適切な目標設定を促すためのフレームワーク「<strong>SMART</strong>の法則」
+      </div>
+    </div>
+  </div>
+
+  <!-- 1-3 -->
+  <div class="issue-card critical">
+    <div class="issue-header">
+      <span class="badge slide">Slide 8</span>
+      <span class="badge critical">誤記</span>
+      <span class="issue-title">「シュミレーション」→「シミュレーション」</span>
+    </div>
+    <div class="issue-body">
+      「1on1のシュミレーションを行い」とありますが、正しくは<strong>シミュレーション（simulation）</strong>です。ビジネス文書での頻出誤用で、指摘されやすいポイントです。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        実際に1on1の<strong>シュミレーション</strong>を行い
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">修正案</div>
+        実際に1on1の<strong>シミュレーション</strong>を行い
+      </div>
+    </div>
+  </div>
+
+  <!-- 1-4 -->
+  <div class="issue-card critical">
+    <div class="issue-header">
+      <span class="badge slide">Slide 6</span>
+      <span class="badge critical">誤記</span>
+      <span class="issue-title">タイトルに余分な閉じ括弧「）」</span>
+    </div>
+    <div class="issue-body">
+      「研修概要<strong>）</strong>」と、タイトル付近に不自然な閉じ括弧が残っています。編集時のミスと思われます。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        研修概要<strong>）</strong>
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">修正案</div>
+        研修概要
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 2. 整合性 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon orange">⚠</div>
+    <div class="section-title">整合性の問題（確認推奨）</div>
+  </div>
+
+  <!-- 2-1 -->
+  <div class="issue-card warning">
+    <div class="issue-header">
+      <span class="badge slide">Slide 13-16</span>
+      <span class="badge warning">矛盾</span>
+      <span class="issue-title">「オプション」のEssential Surveyが見積りに含まれている</span>
+    </div>
+    <div class="issue-body">
+      Slide 13〜15でEssential Surveyを「<strong>オプション</strong>」と位置づけているにもかかわらず、Slide 16の概算見積りには「調査費：Essential Survey（Basicプラン）20,000円」が<strong>合計金額に含まれています</strong>。顧客から「オプションなのに最初から請求に入っているのか？」と疑問を持たれます。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        見積り合計 1,860,000円（調査費20,000円を含む）<br>
+        ※オプションか標準か曖昧
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">改善案</div>
+        <strong>案A：</strong>2パターン提示<br>
+        ・基本プラン：1,840,000円<br>
+        ・Essential Survey付き：1,860,000円<br><br>
+        <strong>案B：</strong>標準プランに含める旨を明記し「オプション」表記を削除
+      </div>
+    </div>
+  </div>
+
+  <!-- 2-2 -->
+  <div class="issue-card warning">
+    <div class="issue-header">
+      <span class="badge slide">Slide 1 / 6</span>
+      <span class="badge warning">要確認</span>
+      <span class="issue-title">提案日と研修日時の間隔が約1年</span>
+    </div>
+    <div class="issue-body">
+      表紙の日付は「2026/4/7」、研修概要の日時は「<strong>2027年3月頃</strong>」で約11ヶ月先です。意図的であれば問題ありませんが、先方が「2026年度中に実施したい」と考えている場合にズレが生じます。ヒアリングで確認済みかどうか要確認です。
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 3. 内容面 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon blue">★</div>
+    <div class="section-title">内容面の改善点（提案書の説得力強化）</div>
+  </div>
+
+  <!-- 3-1 -->
+  <div class="issue-card info">
+    <div class="issue-header">
+      <span class="badge slide">Slide 9-10</span>
+      <span class="badge info">最重要</span>
+      <span class="issue-title">業界特化の事例・話題がゼロ</span>
+    </div>
+    <div class="issue-body">
+      タイトルに「<strong>不用品回収・リユース業の</strong>」と掲げているにもかかわらず、研修内容がどの業界にも通用する汎用的な内容のみです。「オーダーメイド」を特長として謳うなら、業種への理解を示す具体例が不可欠です。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状の事例</div>
+        ・デジタルタトゥーの恐怖<br>
+        ・SNSでの拡散リスク<br>
+        ・パワハラ全般<br>
+        ・カスタマーハラスメント<br>
+        → すべて業種を問わない一般論
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">追加すべき業種特化の事例</div>
+        <strong>コンプライアンス面：</strong><br>
+        ・廃棄物処理法・古物営業法への抵触リスク<br>
+        ・回収物に含まれる個人情報の取り扱い<br>
+        ・不法投棄の連帯責任リスク<br><br>
+        <strong>ハラスメント面：</strong><br>
+        ・訪問先でのカスハラ対応（一般消費者・高齢者等）<br>
+        ・現場作業における安全指導とパワハラの境界線<br><br>
+        <strong>部下育成面：</strong><br>
+        ・多様な雇用形態（アルバイト・契約社員）のメンバーへの目標設定<br>
+        ・シフト制の中での1on1機会の作り方<br>
+        ・現場と事務所のコミュニケーションギャップ
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-2 -->
+  <div class="issue-card info">
+    <div class="issue-header">
+      <span class="badge slide">Slide 3</span>
+      <span class="badge info">改善推奨</span>
+      <span class="issue-title">「ご依頼の背景・貴社の願い」の深掘りが足りない</span>
+    </div>
+    <div class="issue-body">
+      「アイミツ様掲載内容より要約」とだけ書かれており、<strong>クオーレ社固有の事情（事業規模、拠点数、社員構成、過去の問題事象など）への言及がありません</strong>。提案書の冒頭で「御社のことをここまで理解しています」と示すことが、競合との差別化になります。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        貴社内では事業拡大に伴って、現場で成果を上げた人材が次々と中間管理職に登用されています。しかし、これまで全社的・体系的な研修制度も存在しなかったため…
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">改善案（例）</div>
+        貴社は不用品回収・リユース事業を複数拠点で展開され、近年の事業拡大に伴い現場リーダーの課長職登用を積極的に進めていらっしゃいます。一方で、プレイヤーとして優秀だった方が必ずしもマネジメントスキルを体系的に学ぶ機会がなく、<strong>部下育成の「型」が属人化している</strong>という課題をお持ちです。また、現場業務の特性上、コンプライアンスリスクの理解も急務とお伺いしております。
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-3 -->
+  <div class="issue-card info">
+    <div class="issue-header">
+      <span class="badge slide">Slide 4-5</span>
+      <span class="badge info">不足</span>
+      <span class="issue-title">効果測定・KPIの提示がない</span>
+    </div>
+    <div class="issue-body">
+      ゴール①②を掲げていますが、<strong>何をもって達成とするかの指標</strong>がありません。「一過性で終わらせない」と謳うなら、数値化可能な目標を示すことで説得力が増します。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        ゴール①：具体的な手法の理解と実践力の向上<br>
+        ゴール②：コンプライアンス・ハラスメントの理解と内省<br>
+        → 測定基準なし
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">追加すべきKPI例</div>
+        ・研修後1ヶ月以内の<strong>1on1実施率 80%以上</strong><br>
+        ・部下の目標設定シート<strong>作成率 100%</strong><br>
+        ・研修後アンケートの<strong>理解度スコア 4.0/5.0以上</strong><br>
+        ・3ヶ月後フォローアップ時の<strong>行動変容の自己評価</strong><br>
+        ※Essential Surveyを事前・事後で実施し定量比較する旨も記載
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-4 -->
+  <div class="issue-card info">
+    <div class="issue-header">
+      <span class="badge slide">Slide 5</span>
+      <span class="badge info">不足</span>
+      <span class="issue-title">研修後フォローアップの具体性がない</span>
+    </div>
+    <div class="issue-body">
+      「中長期的な視点でご支援やご提案をすることが可能」とありますが、<strong>具体的に何をいつ提供するかが不明</strong>です。見積りにもフォロー費用がなく、口約束の印象になっています。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        単発の研修提供ではなく、研修後どのように管理職の行動が変わったのか…中長期的な視点でご支援やご提案をすることが可能です。<br>
+        → 具体的なアクションなし
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">改善案（例）</div>
+        <strong>研修後フォローアッププラン：</strong><br>
+        ・研修1週間後：事後報告書の納品＋オンライン報告会（30分）<br>
+        ・研修1ヶ月後：受講者アンケートの実施・集計<br>
+        ・研修3ヶ月後：フォローアップ研修（2時間）またはオンラインQ&A<br>
+        ・（オプション）Essential Survey再実施による効果測定<br>
+        ※見積りにフォロー費用を含めるか別途オプション提示
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-5 -->
+  <div class="issue-card info">
+    <div class="issue-header">
+      <span class="badge slide">Slide 1</span>
+      <span class="badge info">表現</span>
+      <span class="issue-title">サブタイトル「危機管理意識」の表現が曖昧</span>
+    </div>
+    <div class="issue-body">
+      「〜部下の育成能力と<strong>危機管理意識</strong>の向上〜」とありますが、研修内容は「コンプライアンス・ハラスメント防止」です。「危機管理」だとBCP・防災を期待される可能性があります。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        〜部下の育成能力と<strong>危機管理意識</strong>の向上〜
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">修正案</div>
+        〜部下の育成能力と<strong>コンプライアンス意識</strong>の向上〜<br>
+        <span style="font-size:12px;color:#999">または「リスク管理意識」</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3-6 -->
+  <div class="issue-card info">
+    <div class="issue-header">
+      <span class="badge slide">Slide 17-18</span>
+      <span class="badge info">不足</span>
+      <span class="issue-title">担当講師の情報・類似業種の実績がない</span>
+    </div>
+    <div class="issue-body">
+      参考資料にEECの事業紹介はあるものの、<strong>今回の研修を担当する講師のプロフィール</strong>が提示されていません。また受講者の声が「サービス業」1件のみで、<strong>不用品回収・リユース業や類似の現場系サービス業</strong>での実績があれば大きな訴求力になります。
+    </div>
+    <div class="comparison">
+      <div class="comp-box before">
+        <div class="comp-label">現状</div>
+        ・導入企業の具体的数値が不明<br>
+        ・受講者の声 1件（サービス業）<br>
+        ・講師プロフィールなし
+      </div>
+      <div class="comp-box after">
+        <div class="comp-label">追加すべき内容</div>
+        ・<strong>担当講師</strong>の経歴・専門分野・登壇実績（写真付き）<br>
+        ・<strong>類似業種での研修実績</strong>（物流、清掃、現場サービス業など）<br>
+        ・導入企業数の具体的数値<br>
+        ・可能であれば受講者の声をもう1〜2件追加
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 4. 検算結果 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon green">✓</div>
+    <div class="section-title">検算結果</div>
+  </div>
+
+  <h4 style="font-size:15px; margin-bottom:8px;">見積り金額（Slide 16）</h4>
+  <table class="calc-table">
+    <tr><th>項目</th><th>単価</th><th>数量</th><th>計</th><th>検算</th></tr>
+    <tr><td>企画費</td><td>300,000</td><td>1</td><td>300,000</td><td class="ok">OK</td></tr>
+    <tr><td>資料代</td><td>2,000</td><td>20</td><td>40,000</td><td class="ok">OK</td></tr>
+    <tr><td>調査費（Essential Survey Basic）</td><td>1,000</td><td>20</td><td>20,000</td><td class="ok">OK</td></tr>
+    <tr><td>研修費</td><td>70,000</td><td>20</td><td>1,400,000</td><td class="ok">OK</td></tr>
+    <tr><td>レポート作成費</td><td>50,000</td><td>1</td><td>50,000</td><td class="ok">OK</td></tr>
+    <tr><td>旅費交通費</td><td>25,000</td><td>2</td><td>50,000</td><td class="ok">OK</td></tr>
+    <tr style="background:#f8f9fa;font-weight:700;"><td>合計</td><td></td><td></td><td>1,860,000</td><td class="ok">OK</td></tr>
+  </table>
+  <p style="font-size:13px; color:#888; margin-top:8px;">※ 全項目の計算は正確。ただし研修費が人数比例（70,000×20名）である根拠の補足説明があると丁寧。</p>
+
+  <h4 style="font-size:15px; margin: 24px 0 8px;">目次 ↔ スライド番号の整合</h4>
+  <ul class="checklist">
+    <li><span class="check pass">✓</span>ご依頼の背景 P.3 → Slide 3</li>
+    <li><span class="check pass">✓</span>本研修のゴール P.4 → Slide 4</li>
+    <li><span class="check pass">✓</span>弊社研修の特長 P.5 → Slide 5</li>
+    <li><span class="check pass">✓</span>研修概要 P.6 → Slide 6</li>
+    <li><span class="check pass">✓</span>研修の流れ P.7〜P.8 → Slide 7-8</li>
+    <li><span class="check pass">✓</span>研修内容の詳細 P.9〜P.11 → Slide 9-11</li>
+    <li><span class="check pass">✓</span>事後報告書 P.12 → Slide 12</li>
+    <li><span class="check pass">✓</span>Essential Survey P.13〜15 → Slide 13-15</li>
+    <li><span class="check pass">✓</span>概算見積り P.16 → Slide 16</li>
+    <li><span class="check pass">✓</span>参考資料 P.17〜P.18 → Slide 17-18</li>
+  </ul>
+</div>
+
+<!-- ==================== 5. 優先順位 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon red">▶</div>
+    <div class="section-title">改善の優先順位</div>
+  </div>
+
+  <div class="priority-grid">
+    <div class="priority-card p1">
+      <div class="priority-rank">PRIORITY 1 — 今すぐ修正</div>
+      <h4>誤字・誤記の修正（4件）</h4>
+      <p>「午前の部→午後の部」「SMRAT→SMART」「シュミレーション→シミュレーション」「余分な括弧の削除」。顧客に見せる前に必ず修正。作業時間：10分程度。</p>
+    </div>
+    <div class="priority-card p1">
+      <div class="priority-rank">PRIORITY 1 — 今すぐ修正</div>
+      <h4>オプション／見積りの整合性</h4>
+      <p>Essential Surveyが「オプション」なのか「標準」なのかを確定し、見積りと表記を統一する。顧客の混乱を防ぐ。</p>
+    </div>
+    <div class="priority-card p2">
+      <div class="priority-rank">PRIORITY 2 — 提出前に対応</div>
+      <h4>業界特化の事例追加</h4>
+      <p>Slide 9-10のコンプライアンス事例・部下育成事例に不用品回収・リユース業の文脈を追加。「この会社のために作った」感を出す最重要ポイント。</p>
+    </div>
+    <div class="priority-card p2">
+      <div class="priority-rank">PRIORITY 2 — 提出前に対応</div>
+      <h4>背景ページの深掘り</h4>
+      <p>Slide 3にクオーレ社固有の事情を加筆。ヒアリングで得た情報を反映し、「理解の深さ」を示す。</p>
+    </div>
+    <div class="priority-card p3">
+      <div class="priority-rank">PRIORITY 3 — 可能であれば</div>
+      <h4>KPI・効果測定の追加</h4>
+      <p>ゴールに対する定量指標をSlide 4に追加。フォローアッププランの具体化もあるとベスト。</p>
+    </div>
+    <div class="priority-card p3">
+      <div class="priority-rank">PRIORITY 3 — 可能であれば</div>
+      <h4>講師プロフィール追加</h4>
+      <p>Slide 17-18に担当講師の経歴・写真を追加。受注率を高める重要要素。</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  提案書レビューレポート｜Claude Code による自動分析｜2026年4月3日
+</footer>
+
+</body>
+</html>
