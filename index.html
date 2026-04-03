@@ -295,6 +295,122 @@
     color: #666;
   }
 
+  /* ===== PRICING ANALYSIS ===== */
+  .price-bar {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    height: 36px;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 8px 0 4px;
+    position: relative;
+  }
+  .price-bar .segment {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    padding: 0 8px;
+    min-width: 40px;
+  }
+  .price-bar .marker {
+    position: absolute;
+    top: -8px;
+    transform: translateX(-50%);
+    font-size: 18px;
+    z-index: 3;
+  }
+  .price-bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #999;
+    margin-bottom: 12px;
+  }
+  .verdict-box {
+    border-radius: 10px;
+    padding: 20px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .verdict-box.expensive {
+    background: #fdf2f2;
+    border: 1px solid #f5c6cb;
+  }
+  .verdict-box.fair {
+    background: #fef9e7;
+    border: 1px solid #f9e79f;
+  }
+  .verdict-box.cheap {
+    background: #eafaf1;
+    border: 1px solid #a9dfbf;
+  }
+  .verdict-box .verdict-label {
+    font-weight: 800;
+    font-size: 16px;
+    margin-bottom: 6px;
+  }
+  .competitor-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    margin: 16px 0;
+  }
+  .competitor-table th {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .competitor-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  .competitor-table tr:last-child td { border-bottom: none; }
+  .competitor-table tr.highlight { background: #fffce6; }
+  .item-verdict {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 6px;
+  }
+  .item-verdict.high { background: #fdecea; color: var(--accent); }
+  .item-verdict.fair { background: #fef9e7; color: #d68910; }
+  .item-verdict.low { background: #eafaf1; color: var(--good); }
+  .insight-card {
+    background: var(--card);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .insight-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+    width: 40px;
+    text-align: center;
+  }
+  .insight-body { font-size: 14px; }
+  .insight-body strong { color: var(--text); }
+
   /* ===== FOOTER ===== */
   footer {
     text-align: center;
@@ -723,6 +839,221 @@
       <h4>講師プロフィール追加</h4>
       <p>Slide 17-18に担当講師の経歴・写真を追加。受注率を高める重要要素。</p>
     </div>
+  </div>
+</div>
+
+<!-- ==================== 6. 見積り妥当性分析 ==================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon orange">¥</div>
+    <div class="section-title">見積り妥当性分析（競合・相場との比較）</div>
+  </div>
+
+  <!-- 総額判定 -->
+  <div class="issue-card warning">
+    <div class="issue-header">
+      <span class="badge warning">総額判定</span>
+      <span class="issue-title">合計 1,860,000円（税別）は相場の2〜3倍</span>
+    </div>
+    <div class="issue-body">
+      同条件（1日・20名・講師派遣・カスタム研修）の市場相場は<strong>50万〜90万円</strong>が中央値です。本提案の186万円は<strong>相場上限の約2〜3倍</strong>に位置します。最大の原因は「研修費」の料金体系にあります。
+    </div>
+
+    <div style="margin-top:16px;">
+      <div style="font-size:12px; font-weight:700; color:#555; margin-bottom:4px;">市場における本提案のポジション</div>
+      <div class="price-bar">
+        <div class="segment" style="background:#27ae60; width:20%;">低価格帯</div>
+        <div class="segment" style="background:#f39c12; width:35%;">相場中央</div>
+        <div class="segment" style="background:#e67e22; width:25%;">高価格帯</div>
+        <div class="segment" style="background:#e74c3c; width:20%;">プレミアム</div>
+        <div class="marker" style="left:92%;">▼</div>
+      </div>
+      <div class="price-bar-labels">
+        <span>15万円</span>
+        <span>50万円</span>
+        <span>90万円</span>
+        <span>186万円</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 項目別分析 -->
+  <h4 style="font-size:16px; font-weight:700; margin:32px 0 16px;">項目別の相場比較</h4>
+
+  <table class="competitor-table">
+    <tr>
+      <th>費目</th>
+      <th>本提案</th>
+      <th>市場相場</th>
+      <th>判定</th>
+    </tr>
+    <tr class="highlight">
+      <td><strong>研修費</strong><br><span style="font-size:11px;color:#999;">70,000円×20名</span></td>
+      <td><strong style="color:var(--accent);">1,400,000円</strong></td>
+      <td>30万〜60万円/日<br><span style="font-size:11px;color:#999;">（大手: 50〜60万円、中小: 15〜30万円）</span></td>
+      <td><span class="item-verdict high">相場の2.3〜4.7倍</span></td>
+    </tr>
+    <tr>
+      <td><strong>企画費</strong><br><span style="font-size:11px;color:#999;">一式</span></td>
+      <td><strong>300,000円</strong></td>
+      <td>0〜20万円<br><span style="font-size:11px;color:#999;">（SMBC等は企画提案無料）</span></td>
+      <td><span class="item-verdict high">やや高い</span></td>
+    </tr>
+    <tr>
+      <td><strong>資料代</strong><br><span style="font-size:11px;color:#999;">2,000円×20名</span></td>
+      <td><strong>40,000円</strong></td>
+      <td>3,000〜5,000円/名<br><span style="font-size:11px;color:#999;">（6万〜10万円が相場帯）</span></td>
+      <td><span class="item-verdict low">相場以下（良心的）</span></td>
+    </tr>
+    <tr>
+      <td><strong>調査費</strong><br><span style="font-size:11px;color:#999;">Essential Survey 1,000円×20名</span></td>
+      <td><strong>20,000円</strong></td>
+      <td>200〜600円/名/月（SaaS型）<br><span style="font-size:11px;color:#999;">Wevox: 600円/名/月、Geppo: 298円〜</span></td>
+      <td><span class="item-verdict low">妥当（安い部類）</span></td>
+    </tr>
+    <tr>
+      <td><strong>レポート作成費</strong><br><span style="font-size:11px;color:#999;">一式</span></td>
+      <td><strong>50,000円</strong></td>
+      <td>含まれるケースが多い<br><span style="font-size:11px;color:#999;">（別途の場合3〜10万円）</span></td>
+      <td><span class="item-verdict fair">妥当</span></td>
+    </tr>
+    <tr>
+      <td><strong>旅費交通費</strong><br><span style="font-size:11px;color:#999;">25,000円×2名</span></td>
+      <td><strong>50,000円</strong></td>
+      <td>新幹線（兵庫⇔東京）往復<br><span style="font-size:11px;color:#999;">約30,000円/名＋宿泊</span></td>
+      <td><span class="item-verdict low">妥当</span></td>
+    </tr>
+  </table>
+
+  <!-- 最大の問題点 -->
+  <div class="issue-card critical">
+    <div class="issue-header">
+      <span class="badge critical">核心</span>
+      <span class="issue-title">研修費の「人数×単価」モデルが割高の主因</span>
+    </div>
+    <div class="issue-body">
+      業界の主流は<strong>「1日○○万円（定員○名まで）」</strong>という固定料金制です。本提案は<strong>70,000円×参加人数</strong>という従量課金モデルを採用しており、20名で140万円になります。<br><br>
+      これは公開講座の1人あたり単価（JMA: 73,700円/名、PHP研究所: 49,500円/名）と同水準ですが、公開講座は会場費・複数講師・ネットワーキング価値などが含まれます。<strong>講師派遣型の1社向け研修で公開講座と同等の単価は、顧客から見ると割高に映ります。</strong>
+    </div>
+  </div>
+
+  <!-- 競合比較 -->
+  <h4 style="font-size:16px; font-weight:700; margin:32px 0 16px;">競合他社との比較（20名・1日研修の場合）</h4>
+
+  <table class="competitor-table">
+    <tr>
+      <th>研修会社</th>
+      <th>想定費用（税別）</th>
+      <th>1人あたり</th>
+      <th>特徴</th>
+    </tr>
+    <tr class="highlight">
+      <td><strong>本提案（EEC）</strong></td>
+      <td><strong style="color:var(--accent);">1,860,000円</strong></td>
+      <td><strong style="color:var(--accent);">93,000円</strong></td>
+      <td>完全カスタム・Survey付・報告書付</td>
+    </tr>
+    <tr>
+      <td>SMBCコンサルティング</td>
+      <td>50万〜60万円</td>
+      <td>25,000〜30,000円</td>
+      <td>大手ブランド・企画提案無料</td>
+    </tr>
+    <tr>
+      <td>インソース</td>
+      <td>40万〜60万円</td>
+      <td>20,000〜30,000円</td>
+      <td>豊富なカリキュラム・実績多数</td>
+    </tr>
+    <tr>
+      <td>中小研修会社（相場）</td>
+      <td>15万〜30万円</td>
+      <td>7,500〜15,000円</td>
+      <td>コスト重視・柔軟な対応</td>
+    </tr>
+    <tr>
+      <td>グロービス（企業内研修）</td>
+      <td>数十万円〜</td>
+      <td>要見積</td>
+      <td>MBA品質・ケーススタディ中心</td>
+    </tr>
+    <tr>
+      <td>JMA（公開講座・1日）</td>
+      <td>—</td>
+      <td>73,700円/名</td>
+      <td>公開型のみ・会場費込み</td>
+    </tr>
+  </table>
+
+  <!-- 総合判定 -->
+  <h4 style="font-size:16px; font-weight:700; margin:32px 0 16px;">総合判定</h4>
+
+  <div class="verdict-box expensive">
+    <div class="verdict-label" style="color:var(--accent);">判定：相場を大幅に上回る価格設定</div>
+    <p>1人あたり<strong>93,000円（税別）</strong>は、講師派遣型の管理職研修としては市場相場（2万〜3万円/名）の<strong>約3倍</strong>です。仮にクオーレ社が複数社から相見積もりを取った場合、価格面で競争力を持つことは難しいと考えられます。</p>
+  </div>
+
+  <!-- アドバイス -->
+  <h4 style="font-size:16px; font-weight:700; margin:32px 0 16px;">価格設定を維持する場合のアドバイス</h4>
+
+  <div class="insight-card">
+    <div class="insight-icon">1</div>
+    <div class="insight-body">
+      <strong>料金体系を「一式」に変更し、内訳を見せない</strong><br>
+      「70,000円×20名」という表記は、公開講座と直接比較されるリスクがあります。「研修プログラム費用一式：140万円」とし、カスタム設計の付加価値を前面に出す方が顧客の納得感が高まります。
+    </div>
+  </div>
+
+  <div class="insight-card">
+    <div class="insight-icon">2</div>
+    <div class="insight-body">
+      <strong>「なぜこの価格なのか」の根拠を明示する</strong><br>
+      現状の提案書には価格の妥当性を説明する要素がありません。以下を追加すべきです：<br>
+      ・完全オーダーメイドの設計工数<br>
+      ・講師の専門性・実績（PRONI AWARDだけでは弱い）<br>
+      ・サーベイ→研修→報告書→フォローのトータルパッケージとしての価値<br>
+      ・類似案件での成果事例（数値ベース）
+    </div>
+  </div>
+
+  <div class="insight-card">
+    <div class="insight-icon">3</div>
+    <div class="insight-body">
+      <strong>松竹梅の3プランを提示する</strong><br>
+      186万円の1プランのみでは「高い/安い」の二択になります。<br>
+      ・<strong>Basicプラン（80〜100万円）</strong>：研修のみ（Survey・報告書なし）<br>
+      ・<strong>Standardプラン（130〜150万円）</strong>：研修＋Survey＋報告書<br>
+      ・<strong>Premiumプラン（186万円）</strong>：上記＋フォローアップ研修<br>
+      中間プランに誘導しつつ、上位プランの存在で「全部入り」の価値を印象づけられます。
+    </div>
+  </div>
+
+  <div class="insight-card">
+    <div class="insight-icon">4</div>
+    <div class="insight-body">
+      <strong>フォローアップを含めたROIを提示する</strong><br>
+      「1人あたり93,000円」を高いと感じさせないためには、<strong>投資対効果（ROI）</strong>の視点が必要です。例えば：<br>
+      ・離職率が1%改善した場合の採用コスト削減額<br>
+      ・ハラスメント訴訟1件の平均コスト（数百万〜数千万円）との比較<br>
+      ・マネジメント改善による生産性向上の試算
+    </div>
+  </div>
+
+  <!-- コスト構造の見える化 -->
+  <h4 style="font-size:16px; font-weight:700; margin:32px 0 16px;">本提案のコスト構造</h4>
+  <div style="background:var(--card); border-radius:12px; padding:24px; box-shadow:0 2px 8px rgba(0,0,0,.04);">
+    <div style="font-size:13px; color:#999; margin-bottom:12px;">合計 1,860,000円の内訳比率</div>
+    <div class="price-bar" style="height:44px; border-radius:10px;">
+      <div class="segment" style="background:#e74c3c; width:75.3%;">研修費 75.3%</div>
+      <div class="segment" style="background:#e67e22; width:16.1%;">企画費 16.1%</div>
+      <div class="segment" style="background:#f39c12; width:4.3%;">その他 8.6%</div>
+    </div>
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; font-size:12px; color:#666;">
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#e74c3c;margin-right:4px;"></span>研修費 1,400,000円</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#e67e22;margin-right:4px;"></span>企画費 300,000円</span>
+      <span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#f39c12;margin-right:4px;"></span>資料代+調査費+レポート+旅費 160,000円</span>
+    </div>
+    <p style="font-size:13px; color:#888; margin-top:12px;">研修費が全体の75%を占めており、ここが価格交渉の主戦場になります。企画費も相場比で高めのため、合わせて170万円（全体の91%）が「人件費・知的労働」に充てられている構造です。</p>
   </div>
 </div>
 
